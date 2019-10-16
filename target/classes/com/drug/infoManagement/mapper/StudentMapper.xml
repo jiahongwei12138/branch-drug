@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.infoManagement.mapper.StudentMapper">
+
+	<update id="jian">
+		update student set stuAge=stuAge-#{age} where stuId=#{lisi}
+	</update>
+	
+	<update id="jia">
+		update student set stuAge=stuAge+#{age} where stuId=#{wangwu}
+	</update>
+	
+	<select id="queryAll" resultType="Student">
+		select * from student where stuId=2
+	</select>
+</mapper>
