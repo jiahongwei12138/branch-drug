@@ -12,6 +12,6 @@
 	</resultMap>
 	
 	<select id="queryByMenu" resultMap="MainModelMap">
-		select * from main_model
+		select * from btanch_model
 	</select>
 </mapper>
