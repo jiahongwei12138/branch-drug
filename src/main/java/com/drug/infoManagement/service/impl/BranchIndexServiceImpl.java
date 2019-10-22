@@ -2,21 +2,36 @@ package com.drug.infoManagement.service.impl;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.drug.entity.MainModel;
-import com.drug.infoManagement.mapper.AdminIndexMapper;
-import com.drug.infoManagement.service.AdminIndexService;
+import com.drug.entity.BranchEmployee;
+import com.drug.entity.BranchModel;
+import com.drug.infoManagement.mapper.BranchIndexMapper;
+import com.drug.infoManagement.service.BranchIndexService;
 @Service
-public class AdminIndexServiceImpl implements AdminIndexService {
+public class BranchIndexServiceImpl implements BranchIndexService {
 
 	@Autowired
-	private AdminIndexMapper adminIndexMapper;
+	private BranchIndexMapper branchIndexMapper;
 	
 	@Override
-	public List<MainModel> queryByMenu() {
-		return adminIndexMapper.queryByMenu();
+	public List<BranchModel> queryByMenu() {
+		return branchIndexMapper.queryByMenu();
+	}
+
+	@Override
+	public BranchEmployee login(BranchEmployee branchEmployee, HttpSession httpSession) {
+	    BranchEmployee employee = branchIndexMapper.login(branchEmployee);
+	    httpSession.setAttribute("employee", employee);
+	    return employee;
+	}
+
+	@Override
+	public List<BranchModel> queryByMenuById(Integer roleId) {
+	    return branchIndexMapper.queryByMenuById(roleId);
 	}
 
 }

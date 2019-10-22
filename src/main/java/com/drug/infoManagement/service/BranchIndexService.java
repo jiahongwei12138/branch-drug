@@ -2,10 +2,17 @@ package com.drug.infoManagement.service;
 
 import java.util.List;
 
-import com.drug.entity.MainModel;
+import javax.servlet.http.HttpSession;
 
-public interface AdminIndexService {
+import com.drug.entity.BranchEmployee;
+import com.drug.entity.BranchModel;
 
-	List<MainModel> queryByMenu();
+public interface BranchIndexService {
 
+	List<BranchModel> queryByMenu();
+	
+	BranchEmployee login(BranchEmployee branchEmployee,HttpSession httpSession);
+	
+	List<BranchModel> queryByMenuById(Integer roleId);
+	
 }

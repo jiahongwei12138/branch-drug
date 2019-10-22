@@ -3,13 +3,16 @@ package com.drug.infoManagement.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.drug.entity.MainModel;
-import com.drug.infoManagement.service.AdminIndexService;
+import com.drug.entity.BranchEmployee;
+import com.drug.entity.BranchModel;
+import com.drug.infoManagement.service.BranchIndexService;
 import com.drug.util.ToolClass;
 
 
@@ -17,14 +20,30 @@ import com.drug.util.ToolClass;
 public class AdminIndexController {
 
 	@Autowired
-	private AdminIndexService adminIndexService;
+	private BranchIndexService branchIndexService;
+	
+	
+	@RequestMapping("/login")
+	@ResponseBody
+	public boolean login(BranchEmployee branchEmployee,HttpSession httpSession){
+	    BranchEmployee employee = branchIndexService.login(branchEmployee, httpSession);
+	    
+	    if (employee!=null) {
+		return true;
+	    }else {
+		return false;
+	    }
+	    
+	}
 	
 	@RequestMapping("/queryMenu")
 	@ResponseBody
-	public Map<String,Object> queryByMenu(){
-		List<MainModel> menuList = adminIndexService.queryByMenu();
-		Map<String,Object> map = ToolClass.responseByData();
-		map.put("data", menuList);
-		return map;
+	public Map<String, Object> queryByMenuById(HttpSession httpSession){
+	    BranchEmployee employee = (BranchEmployee) httpSession.getAttribute("employee");
+	    List<BranchModel> queryByMenuById = branchIndexService.queryByMenuById(employee.getRoleId());
+	    Map<String, Object> responseByData = ToolClass.responseByData();
+	    responseByData.put("data", queryByMenuById);
+	    return responseByData;
+	    
 	}
 }

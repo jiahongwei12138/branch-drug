@@ -46,13 +46,13 @@
                 <div class="content">
                   <form method="post" class="form-validate">
                     <div class="form-group">
-                      <input id="login-username" type="text" name="loginUsername" required data-msg="Please enter your username" class="input-material">
+                      <input id="empName" type="text" name="empName" required data-msg="Please enter your username" class="input-material">
                       <label for="login-username" class="label-material">User Name</label>
                     </div>
                     <div class="form-group">
-                      <input id="login-password" type="password" name="loginPassword" required data-msg="Please enter your password" class="input-material">
+                      <input id="empPwd" type="password" name="empPwd" required data-msg="Please enter your password" class="input-material">
                       <label for="login-password" class="label-material">Password</label>
-                    </div><a id="login" href="index.html" class="btn btn-primary">Login</a>
+                    </div><a id="login" href="javaScript:void(0)" class="btn btn-primary">Login</a>
                     <!-- This should be submit button but I replaced it with <a> for demo purposes-->
                   </form><a href="" class="forgot-pass">Forgot Password?</a><br><small>Do not have an account? </small><a href="" class="signup">Signup</a>
                 </div>
@@ -76,5 +76,41 @@
     <script src="${APP_PATH }/js/jquery.validate.min.js"></script>
     <!-- Main File-->
     <script src="${APP_PATH }/js/front.js"></script>
+    <script src="${APP_PATH }/layui/layui.js"></script>
+    <script type="text/javascript">
+    	layui.use(['form','jquery'],function(){
+    		var form = layui.form;
+    		var $ = layui.jquery;
+    		var layer = layui.layer;
+    		$("#login").click(function(){
+    			var empName=$("#empName").val();
+    			var empPwd=$("#empPwd").val();
+    			if(empName.trim()==""){
+    				layer.msg("请输入账号！",{time:1000, icon:5, shift:6});
+    			}else if(empPwd==""){
+    				layer.msg("请输入密码！",{time:1000, icon:5, shift:6});
+    			}else{
+    				$.ajax({
+    					type:"post",
+    					url:"${APP_PATH}/login.do",
+    					data:{
+    						"empName":empName,
+    						"empPwd":empPwd
+    					},
+    					success:function(result){
+    						if(result==true){
+    							window.location.href="${APP_PATH}/admin/adminindex.jsp";
+    						}else{
+    							layer.msg("登录失败，账号或密码错误！",{time:1000, icon:5, shift:6});
+    						}
+    					}
+    				});
+    			}
+    		});
+    		
+    		
+    	});
+    	
+    </script>
   </body>
 </html>

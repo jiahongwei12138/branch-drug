@@ -1,6 +1,6 @@
 package com.drug.entity;
 
-public class MainModel {
+public class BranchModel {
 
 	private Integer id;//modelId  
 	private String title;//modelName              
