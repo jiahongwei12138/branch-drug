@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.drug.entity.BranchEmployee;
 import com.drug.entity.BranchModel;
+import com.drug.entity.BtanchStorefactsheet;
 import com.drug.infoManagement.service.BranchIndexService;
 import com.drug.util.ToolClass;
 
@@ -43,6 +44,19 @@ public class BranchIndexController {
 	    List<BranchModel> queryByMenuById = branchIndexService.queryByMenuById(employee.getRoleId());
 	    Map<String, Object> responseByData = ToolClass.responseByData();
 	    responseByData.put("data", queryByMenuById);
+	    return responseByData;
+	    
+	}
+	
+	@RequestMapping("/queryStorefactsheet")
+	@ResponseBody
+	public Map<String, Object> queryStorefactsheet(HttpSession httpSession){
+	    BtanchStorefactsheet queryStorefactsheet = branchIndexService.queryStorefactsheet();
+	    if (queryStorefactsheet!=null) {
+		httpSession.setAttribute("Storefactsheet", queryStorefactsheet);
+	    }
+	    Map<String, Object> responseByData = ToolClass.responseByData();
+	    responseByData.put("data", queryStorefactsheet);
 	    return responseByData;
 	    
 	}

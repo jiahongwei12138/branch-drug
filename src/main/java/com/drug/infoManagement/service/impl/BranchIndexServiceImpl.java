@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.drug.entity.BranchEmployee;
 import com.drug.entity.BranchModel;
+import com.drug.entity.BtanchStorefactsheet;
 import com.drug.infoManagement.mapper.BranchIndexMapper;
 import com.drug.infoManagement.service.BranchIndexService;
 @Service
@@ -32,6 +33,11 @@ public class BranchIndexServiceImpl implements BranchIndexService {
 	@Override
 	public List<BranchModel> queryByMenuById(Integer roleId) {
 	    return branchIndexMapper.queryByMenuById(roleId);
+	}
+
+	@Override
+	public BtanchStorefactsheet queryStorefactsheet() {
+	    return branchIndexMapper.queryStorefactsheet();
 	}
 
 }

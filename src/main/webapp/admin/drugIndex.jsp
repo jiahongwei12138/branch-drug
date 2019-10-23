@@ -44,31 +44,8 @@
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content" >
-                	<table style="height: 250px">
-                		<tr align="right">
-                			<td width="110px">名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</td>
-							<td width="170px" align="left">fdfd</td>
-                			<td width="110px">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</td>
-							<td width="170px" align="left">dsd</td>
-                		</tr>
-                		<tr align="right">
-                			<td width="110px">联系电话：</td>
-							<td width="170px" align="left">xxx</td>
-                			<td width="110px">法人代表：</td>
-							<td width="170px" align="left">xxx</td>
-                		</tr>
-                		<tr align="right">
-                			<td width="110px">注册时间：</td>
-							<td width="170px" align="left">xxx</td>
-                			<td width="110px">注册资金：</td>
-							<td width="170px" align="left">xxx</td>
-                		</tr>
-                		<tr align="right">
-                			<td width="110px">员工人数：</td>
-							<td width="170px" align="left">xxx</td>
-                			<td width="110px">注册资金：</td>
-							<td width="170px" align="left">xxx</td>
-                		</tr>
+                	<table id="tab" style="height: 250px">
+                		
                 	</table>
                 </div>
               </div>
@@ -91,5 +68,44 @@
     <script src="${APP_PATH }/js/jquery.validate.min.js"></script>
     <!-- Main File-->
     <script src="${APP_PATH }/js/front.js"></script>
+    <script type="text/javascript">
+    	$(function(){
+    		$.ajax({
+    			type:"post",
+    			url:"${APP_PATH}/queryStorefactsheet.do",
+    			dateType:"json",
+    			success:function(result){
+    				var data=result.data;
+    				var content="";
+    				content+='<tr align="right">';
+            		content+='	<td width="110px">名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</td>';
+					content+='	<td width="170px" align="left">'+data.sfsname+'</td>';
+            		content+='	<td width="110px">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</td>';
+					content+='	<td width="170px" align="left">'+data.sfslocation+'</td>';
+            		content+='</tr>';
+            		content+='<tr align="right">';
+            		content+='	<td width="110px">联系电话：</td>';
+					content+='	<td width="170px" align="left">'+data.sfscontact+'</td>';
+            		content+='	<td width="110px">法人代表：</td>';
+					content+='	<td width="170px" align="left">'+data.empId+'</td>';
+            		content+='</tr>';
+            		content+='<tr align="right">';
+            		content+='	<td width="110px">占地面积：</td>';
+					content+='	<td width="170px" align="left">'+data.sfsnetarea+'</td>';
+            		content+='	<td width="110px">注册资金：</td>';
+					content+='	<td width="170px" align="left">'+data.sfsregisiteredamount+'$</td>';
+            		content+='</tr>';
+            		content+='<tr align="right">';
+            		content+='	<td width="110px">员工人数：</td>';
+					content+='	<td width="170px" align="left">'+data.sfscrewSize+'</td>';
+            		content+='	<td width="110px">注册时间：</td>';
+					content+='	<td width="170px" align="left">'+data.sfsopendate+'</td>';
+            		content+='</tr>';
+    				
+    				$("#tab").html(content);
+    			}
+    		});
+    	});
+    </script>
   </body>
 </html>

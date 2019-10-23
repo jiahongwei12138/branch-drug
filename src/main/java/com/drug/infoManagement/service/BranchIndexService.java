@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.drug.entity.BranchEmployee;
 import com.drug.entity.BranchModel;
+import com.drug.entity.BtanchStorefactsheet;
 
 public interface BranchIndexService {
 
@@ -14,5 +15,7 @@ public interface BranchIndexService {
 	BranchEmployee login(BranchEmployee branchEmployee,HttpSession httpSession);
 	
 	List<BranchModel> queryByMenuById(Integer roleId);
+	
+	BtanchStorefactsheet queryStorefactsheet();
 	
 }
