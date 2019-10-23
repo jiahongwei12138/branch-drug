@@ -54,6 +54,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	
 	<aop:config>
 		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.drug..*ServiceImpl.*(..))"/>
+		<aop:aspect ref="logAdvice">
+			<aop:after method="after" pointcut="execution(* com.drug..*ServiceImpl.*(..))"/>
+		</aop:aspect>
 	</aop:config> 
 
 </beans>

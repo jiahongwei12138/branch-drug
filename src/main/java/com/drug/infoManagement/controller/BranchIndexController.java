@@ -17,7 +17,7 @@ import com.drug.util.ToolClass;
 
 
 @Controller
-public class AdminIndexController {
+public class BranchIndexController {
 
 	@Autowired
 	private BranchIndexService branchIndexService;
