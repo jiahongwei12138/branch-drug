@@ -42,8 +42,7 @@ public class BranchIndexController {
 	public Map<String, Object> queryByMenuById(HttpSession httpSession){
 	    BranchEmployee employee = (BranchEmployee) httpSession.getAttribute("employee");
 	    List<BranchModel> queryByMenuById = branchIndexService.queryByMenuById(employee.getRoleId());
-	    Map<String, Object> responseByData = ToolClass.responseByData();
-	    responseByData.put("data", queryByMenuById);
+	    Map<String, Object> responseByData = ToolClass.responseByData(queryByMenuById, 0);
 	    return responseByData;
 	    
 	}
@@ -55,8 +54,7 @@ public class BranchIndexController {
 	    if (queryStorefactsheet!=null) {
 		httpSession.setAttribute("Storefactsheet", queryStorefactsheet);
 	    }
-	    Map<String, Object> responseByData = ToolClass.responseByData();
-	    responseByData.put("data", queryStorefactsheet);
+	    Map<String, Object> responseByData = ToolClass.responseByData(queryStorefactsheet, 0);
 	    return responseByData;
 	    
 	}

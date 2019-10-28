@@ -9,15 +9,16 @@ import java.util.Map;
  *
  */
 public class ToolClass {
-	/**
-	 * Controller返回数据格式工具
-	 * @return
-	 */
-	public static Map<String,Object> responseByData() {
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("code", 0);		//返回状态码
-		map.put("msg","");		
-		map.put("count", 10);	//总行数，用于分页
-		return map;
-	}
+    /**
+     * Controller返回数据格式工具
+     * @return
+     */
+    public static Map<String,Object> responseByData(Object data,Integer count) {
+	Map<String,Object> map = new HashMap<String,Object>();
+	map.put("code", 0);		//返回状态码
+	map.put("msg","");		
+	map.put("data",data);		
+	map.put("count", count);	//总行数，用于分页
+	return map;
+    }
 }
