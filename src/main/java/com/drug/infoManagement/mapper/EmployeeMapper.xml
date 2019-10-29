@@ -32,5 +32,32 @@
 		UPDATE btanch_employee SET empState = '已删除' WHERE empId = #{empid}
 	</update>
 	
+	<update id="updateEmployeeById" parameterType="BranchEmployee">
+		UPDATE btanch_employee SET 
+		empName=#{empName},
+		empPwd=#{empPwd},
+		empAge=#{empAge},
+		empSex=#{empSex},
+		empTel=#{empTel},
+		headUrl=#{headUrl},
+		joinTime=#{joinTime},
+		studyUndergo=#{studyUndergo},
+		roleId=#{roleId} 
+		WHERE empId = #{empId}
+	</update>
+	
+	<insert id="addMoreEmp" parameterType="BranchEmployee">
+		insert into main_employee(empName,empAge,empSex,empTel,joinTime,studyUndergo)
+		values
+		<foreach collection="list" item="emp" separator=",">
+			(#{emp.empName},#{emp.empAge},#{emp.empSex},#{emp.empTel},#{emp.joinTime},#{emp.studyUndergo})
+		</foreach>
+	</insert>
+	
+	<insert id="addEmployee" parameterType="BranchEmployee">
+		INSERT INTO btanch_employee VALUES
+		(null,#{empName},#{empPwd},#{empAge},#{empSex},#{empTel},"url...",#{joinTime},#{studyUndergo},DEFAULT,#{roleId},DEFAULT,DEFAULT)
+	</insert>
+	
 	
 </mapper>

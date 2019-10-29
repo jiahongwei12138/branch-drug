@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-
 import com.drug.entity.BranchEmployee;
 
 public interface EmployeeMapper {
@@ -26,5 +24,29 @@ public interface EmployeeMapper {
     @Select(value = { "SELECT COUNT(*) FROM btanch_employee WHERE empState = '未删除'" })
     int getCounEmp();
     
+    /**
+     * 功能：根据id删除员工
+     * @param empid
+     * @return 是否成功
+     *@datetime2019年10月29日下午2:50:29
+     */
     int deleteEmpById(int empid);
+    
+    /**
+     * 功能：根据id修改员工
+     * @param branchEmployee
+     *@datetime2019年10月29日下午2:53:01
+     */
+    void updateEmployeeById(BranchEmployee branchEmployee);
+    
+    /**
+     * 功能：增加emp
+     * @param branchEmployee 员工对象
+     *@datetime2019年10月29日下午3:58:11
+     */
+    void addEmployee(BranchEmployee branchEmployee);
+    
+    void addMoreEmp(List<BranchEmployee> empList);
+    
+    
 }

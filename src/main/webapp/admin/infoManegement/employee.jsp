@@ -1,25 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>员工管理</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="stylesheet" href="${APP_PATH }/layui/css/layui.css"  media="all">
-  <script src="${APP_PATH }/layui/layui.js"></script>
-  <script type="text/javascript" src="${APP_PATH }/js/jquery-3.4.1.min.js"></script>
-  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+<meta charset="utf-8">
+<title>员工管理</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="${APP_PATH }/layui/css/layui.css"
+	media="all">
+<script src="${APP_PATH }/layui/layui.js"></script>
+<script type="text/javascript" src="${APP_PATH }/js/jquery-3.4.1.min.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
 
- <div class="layui-upload">
-  		<button type="button" class="layui-btn layui-btn-normal" id="test8">导入员工</button>
- 		<button type="button" class="layui-btn" id="test9">确认导入</button>
+	<div class="layui-upload">
+		<button type="button" class="layui-btn layui-btn-normal" id="test8">导入员工</button>
+		<button type="button" class="layui-btn" id="test9">确认导入</button>
 	</div>
-<table class="layui-hide" id="test" lay-filter="test"></table>
+	<table class="layui-hide" id="test" lay-filter="test"></table>
 
 	<script type="text/html" id="toolbarDemo"> 
   <div class="layui-btn-container" style="padding-left:20px;">
@@ -30,12 +32,12 @@
  </div>
 	
 </script>
-<script type="text/html" id="barDemo">
+	<script type="text/html" id="barDemo">
   <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
-<script>
+	<script>
 layui.use(['table','laydate','form','tree','jquery', 'util','upload','laydate'], function(){
   var table = layui.table;
   var laydate = layui.laydate;
@@ -124,33 +126,15 @@ layui.use(['table','laydate','form','tree','jquery', 'util','upload','laydate'],
 			});
       });
     } else if(obj.event === 'edit'){
-    	$.ajax({
-    		type:"post",
-    		url:"${APP_PATH}/queryDeptGiveOption.do",
-    		success:function(result){
-    			var deptment=result.data;
-    			var content='<option value="">请分配部门</option>';
-    			$.each(deptment,function(index,item){
-    				if(item.deptId==data.deptId){
-    					content+='<option id="opt'+item.deptId+'" selected value="'+item.deptId+'">'+item.deptName+'</option>';
-    				}else{
-    					content+='<option id="opt'+item.deptId+'" value="'+item.deptId+'">'+item.deptName+'</option>';
-    				}
-    				
-    			});
-    			$("#deptId").html(content);
-    			form.render('select'); 
-    		}
-    	});
+    	
     	$.ajax({
 			type:"post",
-			url:"${APP_PATH}/queryRolesByDeptId.do",
-			data:{
-				"deptId":data.deptId
-			},
+			url:"${APP_PATH}/queryRoleIdName.do",
 			success:function(result){
 				var content='<option value="">请分配角色</option>';
-				$.each(result,function(index,item){
+				console.log(result);
+				var d=result.data;
+				$.each(d,function(index,item){
 					if(item.roleId==data.roleId){
 						content+='<option id="iot'+item.roleId+'" selected value="'+item.roleId+'">'+item.roleName+'</option>';
     				}else{
@@ -162,10 +146,11 @@ layui.use(['table','laydate','form','tree','jquery', 'util','upload','laydate'],
 			}
 		});
     	$("#demo1").prop("src","/pic/"+data.headUrl);
-    	console.log(data);
+    	//console.log(data);
     	//formTest 即 class="layui-form" 所在元素对应的 lay-filter="" 对应的值
     	form.val("formAuthority", {
     	  "empName": data.empName // "name": "value"
+    	  ,"empPwd":data.empPwd
     	  ,"empAge": data.empAge
     	  ,"empSex": data.empSex
     	  ,"empTel":data.empTel
@@ -220,10 +205,8 @@ layui.use(['table','laydate','form','tree','jquery', 'util','upload','laydate'],
 	  var deptId=data.value;
 	  $.ajax({
 			type:"post",
-			url:"${APP_PATH}/queryRolesByDeptId.do",
-			data:{
-				"deptId":deptId
-			},
+			url:"${APP_PATH}/queryRoleIdName.do",
+			
 			success:function(data){
 				var content='<option value="">请分配角色</option>';
 				$.each(data,function(index,item){
@@ -241,19 +224,7 @@ layui.use(['table','laydate','form','tree','jquery', 'util','upload','laydate'],
 		switch (obj.event) {
 		case 'getCheckData':
             $("#formIdOne")[0].reset();
-            $.ajax({
-        		type:"post",
-        		url:"${APP_PATH}/queryDeptGiveOption.do",
-        		success:function(result){
-        			var data=result.data;
-        			var content='<option value="">请分配部门</option>';
-        			$.each(data,function(index,item){
-        				content+='<option id="opt'+item.deptId+'" value="'+item.deptId+'">'+item.deptName+'</option>';
-        			});
-        			$("#deptId").html(content);
-        			form.render('select'); 
-        		}
-        	});
+            
 			var index = layer.open({
 				title : '新增员工',//标题
 				type : 1,//样式
@@ -338,82 +309,90 @@ layui.use(['table','laydate','form','tree','jquery', 'util','upload','laydate'],
 </script>
 
 
-		<div class="site-text" style="margin: 5%; display: none" id="branch" target="test123">
+	<div class="site-text" style="margin: 5%; display: none" id="branch"
+		target="test123">
 		<form class="layui-form" lay-filter="formAuthority" id="formIdOne">
-		<input type="hidden" name="empId" autocomplete="off" class="layui-input">
-			<div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 20px;font-size:13px;">员工姓名：</label>
+			<input type="hidden" name="empId" autocomplete="off"
+				class="layui-input">
+			<div class="layui-input-inline" style="margin-top: 10px;">
+				<label style="margin: 0 10px 0 20px; font-size: 13px;">员工姓名：</label>
 				<div class="layui-input-inline">
-      				<input type="text" name="empName" lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-    			</div>
+					<input type="text" name="empName" lay-verify="required"
+						placeholder="请输入姓名" autocomplete="off" class="layui-input">
+				</div>
 			</div>
-			<div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 20px;font-size:13px;">员工年龄：</label>
+			<div class="layui-input-inline" style="margin-top: 10px;">
+				<label style="margin: 0 10px 0 20px; font-size: 13px;">员工密码：</label>
 				<div class="layui-input-inline">
-      				<input type="text" name="empAge" lay-verify="required" placeholder="请输入年龄" autocomplete="off" class="layui-input">
-    			</div>
+					<input type="text" name="empPwd" lay-verify="required"
+						placeholder="请输入密码" autocomplete="off" class="layui-input">
+				</div>
 			</div>
-			<div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 20px;font-size:13px;">员工性别：</label>
-				<div class="layui-input-inline"  style="width:193px">
-      				<input type="radio" name="empSex" value="男" title="男">
-     				<input type="radio" name="empSex" value="女" title="女" checked>
-    			</div>
-			</div>
-			<div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 20px;font-size:13px;">分配部门：</label>
-				<div class="layui-input-inline"  style="width:193px">
-      				<select id="deptId"  lay-filter="deptCheck" name="deptId" lay-verify="">
-					</select> 
-    			</div>
-			</div>
-			 <div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 20px;font-size:13px;">选择角色：</label>
-				<div class="layui-input-inline"  style="width:193px">
-      				<select name="roleId" id="roleId" lay-verify="">
-      					<option value="">请分配角色</option>
-					</select> 
-    			</div>
-			</div>
-			<div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 20px;font-size:13px;">员工电话：</label>
+			<div class="layui-input-inline" style="margin-top: 10px;">
+				<label style="margin: 0 10px 0 20px; font-size: 13px;">员工年龄：</label>
 				<div class="layui-input-inline">
-      				<input type="tel" name="empTel" lay-verify="required|phone" placeholder="请输入电话" autocomplete="off" class="layui-input">
-    			</div>
+					<input type="text" name="empAge" lay-verify="required"
+						placeholder="请输入年龄" autocomplete="off" class="layui-input">
+				</div>
 			</div>
-			<div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 20px;font-size:13px;">员工学历：</label>
-				<div class="layui-input-inline" style="width:193px">
+			<div class="layui-input-inline" style="margin-top: 10px;">
+				<label style="margin: 0 10px 0 20px; font-size: 13px;">员工性别：</label>
+				<div class="layui-input-inline" style="width: 193px">
+					<input type="radio" name="empSex" value="男" title="男"> <input
+						type="radio" name="empSex" value="女" title="女" checked>
+				</div>
+			</div>
+			
+			<div class="layui-input-inline" style="margin-top: 10px;">
+				<label style="margin: 0 10px 0 20px; font-size: 13px;">选择角色：</label>
+				<div class="layui-input-inline" style="width: 193px">
+					<select name="roleId" id="roleId" lay-verify="">
+						<option value="">请分配角色</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-input-inline" style="margin-top: 10px;">
+				<label style="margin: 0 10px 0 20px; font-size: 13px;">员工电话：</label>
+				<div class="layui-input-inline">
+					<input type="tel" name="empTel" lay-verify="required|phone"
+						placeholder="请输入电话" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-input-inline" style="margin-top: 10px;">
+				<label style="margin: 0 10px 0 20px; font-size: 13px;">员工学历：</label>
+				<div class="layui-input-inline" style="width: 193px">
 					<select name="studyUndergo" lay-verify="">
-      			      <option value="">请选择学历</option>
-					  <option value="高中">高中</option>
-					  <option value="专科">专科</option>
-					  <option value="本科">本科</option>
-					  <option value="硕士">硕士</option>
-					  <option value="研究生">研究生</option>
-					</select> 
-    			</div>
+						<option value="">请选择学历</option>
+						<option value="高中">高中</option>
+						<option value="专科">专科</option>
+						<option value="本科">本科</option>
+						<option value="硕士">硕士</option>
+						<option value="研究生">研究生</option>
+					</select>
+				</div>
 			</div>
-			<div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 20px;font-size:13px;">入职时间：</label>
+			<div class="layui-input-inline" style="margin-top: 10px;">
+				<label style="margin: 0 10px 0 20px; font-size: 13px;">入职时间：</label>
 				<div class="layui-input-inline">
-      				 <input type="text" name="joinTime" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-    			</div>
+					<input type="text" name="joinTime" id="date" lay-verify="date"
+						placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+				</div>
 			</div>
-			<div class="layui-input-inline" style="margin-top:10px;">
-				<label style="margin:0 10px 0 20px;font-size:13px;">上传头像：</label>
+			<div class="layui-input-inline" style="margin-top: 10px;">
+				<label style="margin: 0 10px 0 20px; font-size: 13px;">上传头像：</label>
 				<div class="layui-input-inline">
-      				<div class="layui-upload">
-					  <button type="button" class="layui-btn" id="test1">上传图片</button>
-					    <div class="layui-upload-list">
-					       <img src="" style="width: 100px;height: 100px" class="layui-upload-img" id="demo1">
-					  </div>
-					</div>   
-					
-    			</div>
+					<div class="layui-upload">
+						<button type="button" class="layui-btn" id="test1">上传图片</button>
+						<div class="layui-upload-list">
+							<img src="" style="width: 100px; height: 100px"
+								class="layui-upload-img" id="demo1">
+						</div>
+					</div>
+
+				</div>
 			</div>
-			</form>
-		</div>
-	
+		</form>
+	</div>
+
 </body>
 </html>
