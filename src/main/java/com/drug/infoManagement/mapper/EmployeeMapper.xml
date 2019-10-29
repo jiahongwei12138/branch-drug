@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.infoManagement.mapper.EmployeeMapper">
+
+	
+	<resultMap type="BranchEmployee" id="BranchEmployeeMap">
+		<id property="empId" column="empId"/>
+		<result property="empName" column="empName"/>
+		<result property="empPwd" column="empPwd"/>
+		<result property="empAge" column="empAge"/>
+		<result property="empSex" column="empSex"/>
+		<result property="empTel" column="empTel"/>
+		<result property="studyUndergo" column="studyUndergo"/>
+		<result property="roleId" column="roleId"/>
+		<result property="joinTime" column="joinTime"/>
+		<result property="field1" column="roleName"/>
+	</resultMap> 
+	
+	<select id="queryAllEmp" resultMap="BranchEmployeeMap" parameterType="map">
+		SELECT e.*,r.roleName FROM btanch_employee e LEFT JOIN btanch_role r ON e.roleId = r.roleId 
+		 <where>
+		 	empState = '未删除' 
+		 	<if test="empName != null and empName != ''">
+		 		AND empName LIKE concat("%",#{empName},"%") 
+		 	</if>
+		 </where>
+		ORDER BY empId DESC 
+ 		LIMIT #{page},#{limit}
+	</select>
+	
+	<update id="deleteEmpById" parameterType="integer" >
+		UPDATE btanch_employee SET empState = '已删除' WHERE empId = #{empid}
+	</update>
+	
+	
+</mapper>

@@ -24,4 +24,5 @@
 			ON m.`modelId`=rm.`modelId` INNER JOIN btanch_role r
 			ON r.`roleId`=rm.`roleId` WHERE r.`roleId`=#{roleId}
 	</select>
+	
 </mapper>
