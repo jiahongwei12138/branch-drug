@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.drug.entity.BranchEmployee;
 import com.drug.entity.BranchModel;
-import com.drug.entity.BtanchStorefactsheet;
+import com.drug.entity.BranchStorefactsheet;
 import com.drug.infoManagement.service.BranchIndexService;
 import com.drug.util.ToolClass;
 
@@ -50,7 +50,7 @@ public class BranchIndexController {
 	@RequestMapping("/queryStorefactsheet")
 	@ResponseBody
 	public Map<String, Object> queryStorefactsheet(HttpSession httpSession){
-	    BtanchStorefactsheet queryStorefactsheet = branchIndexService.queryStorefactsheet();
+	    BranchStorefactsheet queryStorefactsheet = branchIndexService.queryStorefactsheet();
 	    if (queryStorefactsheet!=null) {
 		httpSession.setAttribute("Storefactsheet", queryStorefactsheet);
 	    }

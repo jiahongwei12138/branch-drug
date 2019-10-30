@@ -6,7 +6,7 @@ package com.drug.entity;
  * 2019年10月29日上午9:53:26
  * @version 1.0
  */
-public class BtanchRole {
+public class BranchRole {
     private Integer roleId;		//角色表id
     private String roleName;	//角色名称
     private String roleDescribe;//角色描述
