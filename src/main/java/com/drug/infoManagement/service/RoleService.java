@@ -51,4 +51,8 @@ public interface RoleService {
      *@datetime2019年10月30日上午11:39:17
      */
     void updateRoleById(BranchRole branchRole );
+    
+    List<Integer> queryModelIdByRoleId(Integer roleId);
+    
+    void assignAuthority(String roleId, Integer[] modelIds);
 }

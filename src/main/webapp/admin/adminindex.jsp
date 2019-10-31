@@ -268,7 +268,7 @@
   			</ul>
   			<div class="layui-tab-content" id="main" style="height:590px;">
   			        <div class="layui-tab-item layui-show" id = "boxscroll4" style="height:100%;width:100%;">
-  						<iframe src="drugIndex.jsp" style="height:100%;width:100%;"  scrolling="auto" id="iframe" class="layadmin-iframe"  frameborder="0"></iframe>
+  						<iframe src="drugIndex.jsp" style="height:150%;width:100%;"  scrolling="auto" id="iframe" class="layadmin-iframe"  frameborder="0"></iframe>
   					</div>
   			</div>
 	</div>
@@ -301,7 +301,7 @@ layui.use('element', function(){
 		  if(ifs == 0){
 			  element.tabAdd('docDemoTabBrief', {
 				  title: name
-				  ,content:'<iframe id="iframe" src="'+url+'" scrolling="auto" style="height:100%;width:100%;" class="layadmin-iframe" frameborder="0"></iframe>'
+				  ,content:'<iframe id="iframe" src="'+url+'" scrolling="auto" style="height:150%;width:100%;" class="layadmin-iframe" frameborder="0"></iframe>'
 				  ,id: url
 				});
 		  }

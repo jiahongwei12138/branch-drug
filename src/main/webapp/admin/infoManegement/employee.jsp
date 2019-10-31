@@ -223,6 +223,7 @@ layui.use(['table','laydate','form','tree','jquery', 'util','upload','laydate'],
 		var checkStatus = table.checkStatus(obj.config.id);
 		switch (obj.event) {
 		case 'getCheckData':
+			
             $("#formIdOne")[0].reset();
             
 			var index = layer.open({

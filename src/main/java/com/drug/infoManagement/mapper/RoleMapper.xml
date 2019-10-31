@@ -41,4 +41,21 @@
 	<update id="updateRoleById" parameterType="BranchRole">
 		UPDATE btanch_role SET roleName = #{roleName},roleDescribe=#{roleDescribe} WHERE roleId = #{roleId}
 	</update>
+	
+	<select id="queryModelIdByRoleId" parameterType="integer" resultType="integer">
+		SELECT modelId FROM btanch_roleModule WHERE roleId = #{roleId}
+	</select>
+	
+	<!-- 通过角色id删除该角色所拥有的权限模块 -->
+	<delete id="deleteAuthorityByRoleId" parameterType="String">
+		delete from btanch_roleModule where roleId=#{roleId}
+	</delete>
+	
+	<!-- 分配权限模块 -->
+	<insert id="addAuthority" parameterType="Map">
+		insert into btanch_roleModule(roleId,modelId) values
+		<foreach collection="modelIds" item="modelId" separator=",">
+			(#{roleId},#{modelId})
+		</foreach>
+	</insert>
 </mapper>
