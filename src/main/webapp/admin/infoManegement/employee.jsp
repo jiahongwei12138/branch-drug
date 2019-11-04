@@ -224,6 +224,8 @@ layui.use(['table','laydate','form','tree','jquery', 'util','upload','laydate'],
 		switch (obj.event) {
 		case 'getCheckData':
 			
+			
+			
             $("#formIdOne")[0].reset();
             
 			var index = layer.open({

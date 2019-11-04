@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.infoManagement.mapper.ClientMapper">
+	<select id="queryAllClient" parameterType="map" resultType="BranchClient">
+		SELECT * FROM branch_client 
+		<where>
+			clientState = '未删除'
+			<if test="clientName!=null and clientName!=''">
+				AND clientName LIKE concat("%",#{clientName},"%")
+			</if>
+		</where> 
+		 LIMIT #{page},#{limit}
+	</select>
+	
+	<select id="getCountClient" resultType="int">
+		SELECT COUNT(*) FROM branch_client
+	</select>
+	
+	<update id="deleteCliById" parameterType="String">
+		UPDATE branch_client SET clientState = '已删除' WHERE clientId = #{clientId}
+	</update>
+	
+	<update id="updateCliById" parameterType="BranchClient">
+		UPDATE branch_client SET clientName = #{clientName},clientAge = #{clientAge},clientSex = #{clientSex},clientTel = #{clientTel}
+		 WHERE clientId = #{clientId}
+	</update>
+	
+	<insert id="addClient" parameterType="BranchClient">
+		INSERT INTO branch_client VALUES
+			(NULL,#{clientName},#{clientAge},#{clientSex},#{clientTel},DEFAULT,NULL,NULL)
+	</insert>
+	
+</mapper>
