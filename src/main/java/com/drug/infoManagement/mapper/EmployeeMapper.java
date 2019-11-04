@@ -21,7 +21,7 @@ public interface EmployeeMapper {
      * @return 行数
      *@datetime2019年10月28日下午3:33:29
      */
-    @Select(value = { "SELECT COUNT(*) FROM btanch_employee WHERE empState = '未删除'" })
+    @Select(value = { "SELECT COUNT(*) FROM branch_employee WHERE empState = '未删除'" })
     int getCounEmp();
     
     /**

@@ -3,57 +3,57 @@
 <mapper namespace="com.drug.infoManagement.mapper.RoleMapper">
 
 	<select id="queryRoleIdName"  resultType="BranchRole">
-		SELECT roleId,roleName FROM btanch_role WHERE visibles = '1';
+		SELECT roleId,roleName FROM Branch_role WHERE visibles = '1';
 	</select>
 	
 	<select id="queryCountRole" resultType="int">
-		SELECT COUNT(*) FROM btanch_role
+		SELECT COUNT(*) FROM Branch_role
 	</select>
 	
 	<select id="queryAllRole" parameterType="map" resultType="BranchRole">
-		SELECT * FROM btanch_role WHERE visibles = 1 LIMIT #{page},#{limit}
+		SELECT * FROM Branch_role WHERE visibles = 1 LIMIT #{page},#{limit}
 	</select>
 	
 	<insert id="addRole" parameterType="BranchRole" >
-		INSERT INTO btanch_role VALUES(NULL,#{roleName},#{roleDescribe},DEFAULT,NULL,NULL)
+		INSERT INTO Branch_role VALUES(NULL,#{roleName},#{roleDescribe},DEFAULT,NULL,NULL)
 	</insert>
 	
 	<select id="queryRoleName" parameterType="String" resultType="BranchRole">
-		SELECT * FROM btanch_role WHERE roleName = #{roleName}
+		SELECT * FROM Branch_role WHERE roleName = #{roleName}
 	</select>
 	
 	<update id="updatevisibles" parameterType="BranchRole">
-		UPDATE btanch_role SET visibles = '1' WHERE roleName = #{roleName}
+		UPDATE Branch_role SET visibles = '1' WHERE roleName = #{roleName}
 	</update>
 	
 	<update id="delRole" parameterType="String">
-		UPDATE btanch_role SET visibles = '0' WHERE roleId = #{roleId}
+		UPDATE Branch_role SET visibles = '0' WHERE roleId = #{roleId}
 	</update>
 	
 	<update id="delEmpRole"  parameterType="String">
-		UPDATE btanch_employee SET roleId = '0' WHERE roleId = #{roleId}
+		UPDATE Branch_employee SET roleId = '0' WHERE roleId = #{roleId}
 	</update>
 	
 	<delete id="delRoleModuleRole"  parameterType="String">
-		DELETE FROM btanch_roleModule WHERE roleId =#{roleId}
+		DELETE FROM Branch_roleModule WHERE roleId =#{roleId}
 	</delete>
 	
 	<update id="updateRoleById" parameterType="BranchRole">
-		UPDATE btanch_role SET roleName = #{roleName},roleDescribe=#{roleDescribe} WHERE roleId = #{roleId}
+		UPDATE Branch_role SET roleName = #{roleName},roleDescribe=#{roleDescribe} WHERE roleId = #{roleId}
 	</update>
 	
 	<select id="queryModelIdByRoleId" parameterType="integer" resultType="integer">
-		SELECT modelId FROM btanch_roleModule WHERE roleId = #{roleId}
+		SELECT modelId FROM Branch_roleModule WHERE roleId = #{roleId}
 	</select>
 	
 	<!-- 通过角色id删除该角色所拥有的权限模块 -->
 	<delete id="deleteAuthorityByRoleId" parameterType="String">
-		delete from btanch_roleModule where roleId=#{roleId}
+		delete from Branch_roleModule where roleId=#{roleId}
 	</delete>
 	
 	<!-- 分配权限模块 -->
 	<insert id="addAuthority" parameterType="Map">
-		insert into btanch_roleModule(roleId,modelId) values
+		insert into Branch_roleModule(roleId,modelId) values
 		<foreach collection="modelIds" item="modelId" separator=",">
 			(#{roleId},#{modelId})
 		</foreach>

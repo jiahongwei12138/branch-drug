@@ -17,7 +17,7 @@
 	</resultMap> 
 	
 	<select id="queryAllEmp" resultMap="BranchEmployeeMap" parameterType="map">
-		SELECT e.*,r.roleName FROM btanch_employee e LEFT JOIN btanch_role r ON e.roleId = r.roleId 
+		SELECT e.*,r.roleName FROM Branch_employee e LEFT JOIN Branch_role r ON e.roleId = r.roleId 
 		 <where>
 		 	empState = '未删除' 
 		 	<if test="empName != null and empName != ''">
@@ -29,11 +29,11 @@
 	</select>
 	
 	<update id="deleteEmpById" parameterType="integer" >
-		UPDATE btanch_employee SET empState = '已删除' WHERE empId = #{empid}
+		UPDATE Branch_employee SET empState = '已删除' WHERE empId = #{empid}
 	</update>
 	
 	<update id="updateEmployeeById" parameterType="BranchEmployee">
-		UPDATE btanch_employee SET 
+		UPDATE Branch_employee SET 
 		empName=#{empName},
 		empPwd=#{empPwd},
 		empAge=#{empAge},
@@ -55,7 +55,7 @@
 	</insert>
 	
 	<insert id="addEmployee" parameterType="BranchEmployee">
-		INSERT INTO btanch_employee VALUES
+		INSERT INTO Branch_employee VALUES
 		(null,#{empName},#{empPwd},#{empAge},#{empSex},#{empTel},"url...",#{joinTime},#{studyUndergo},DEFAULT,#{roleId},DEFAULT,DEFAULT)
 	</insert>
 	

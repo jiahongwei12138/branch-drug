@@ -12,16 +12,16 @@
 	</resultMap>
 	
 	<select id="queryByMenu" resultMap="branchModelMap">
-		select * from btanch_model
+		select * from Branch_model
 	</select>
 	
 	<select id="login" parameterType="BranchEmployee" resultType="BranchEmployee">
-		select * from btanch_employee where empState='未删除' and empName=#{empName} and empPwd=#{empPwd}
+		select * from Branch_employee where empState='未删除' and empName=#{empName} and empPwd=#{empPwd}
 	</select>
 	
 	<select id="queryByMenuById" parameterType="Integer" resultMap="branchModelMap">
-		SELECT * FROM btanch_model m INNER JOIN btanch_roleModule rm
-			ON m.`modelId`=rm.`modelId` INNER JOIN btanch_role r
+		SELECT * FROM Branch_model m INNER JOIN Branch_roleModule rm
+			ON m.`modelId`=rm.`modelId` INNER JOIN Branch_role r
 			ON r.`roleId`=rm.`roleId` WHERE r.`roleId`=#{roleId}
 	</select>
 	
