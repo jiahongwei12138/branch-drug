@@ -9,7 +9,10 @@ package com.drug.entity;
 public class BranchPurchaseReturnDetails {
 	private int bprdId;//退货详情主键id
 	private int proId;//商品id(商品表主键id)
+	private String proName;//商品名称
+	private double proPrice;//商品价格
 	private int bprdQuantity;//商品数量
+	private double bprdSubtotal;//商品小计
 	private int bprId;//退货单ID(退货订单表主键id)
 	public int getBprdId() {
 		return bprdId;
@@ -29,18 +32,30 @@ public class BranchPurchaseReturnDetails {
 	public void setBprdQuantity(int bprdQuantity) {
 		this.bprdQuantity = bprdQuantity;
 	}
+	
 	public int getBprId() {
 		return bprId;
 	}
 	public void setBprId(int bprId) {
 		this.bprId = bprId;
 	}
-	public BranchPurchaseReturnDetails(int bprdId, int proId, int bprdQuantity, int bprId) {
-		super();
-		this.bprdId = bprdId;
-		this.proId = proId;
-		this.bprdQuantity = bprdQuantity;
-		this.bprId = bprId;
+	public String getProName() {
+		return proName;
+	}
+	public void setProName(String proName) {
+		this.proName = proName;
+	}
+	public double getProPrice() {
+		return proPrice;
+	}
+	public void setProPrice(double proPrice) {
+		this.proPrice = proPrice;
+	}
+	public double getBprdSubtotal() {
+		return bprdSubtotal;
+	}
+	public void setBprdSubtotal(double bprdSubtotal) {
+		this.bprdSubtotal = bprdSubtotal;
 	}
 	public BranchPurchaseReturnDetails() {
 		super();

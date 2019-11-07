@@ -1,12 +1,12 @@
 package com.drug.entity;
 /**
  * 
- * 类的描述：分店采购订单类
+ * 类的描述：分店采购订单子类
  * @author 刘鑫旺
- * @dateTime 2019年10月22日上午9:04:53
+ * @dateTime 2019年10月23日上午8:40:46
  * @version 1.0
  */
-public class BranchPurchaseOrder {
+public class BranchPurchaseOrderChild extends BranchPurchaseOrder{
 	private String bpoId;  //订单编号
 	private String bpoTime; //下单时间
 	private int bpurchaseId;  // 采购员(员工主键employeeId)
@@ -18,7 +18,8 @@ public class BranchPurchaseOrder {
 	private String payStatus; //付款状态(未付款/已付款)
 	private String storeStatus; //入库状态(未入库/已入库)
 	private String qualityStatus; //质检状态(未质检/已质检)
-	
+	private String bpurchaseName;//采购员
+	private String checkName;//审核员
 	public String getBpoId() {
 		return bpoId;
 	}
@@ -85,24 +86,21 @@ public class BranchPurchaseOrder {
 	public void setQualityStatus(String qualityStatus) {
 		this.qualityStatus = qualityStatus;
 	}
-	public BranchPurchaseOrder(String bpoId, String bpoTime, int bpurchaseId, int braId, double bpoTotalPrices,
-			String checkStatus, int checkId, int checkTime, String payStatus, String storeStatus,
-			String qualityStatus) {
-		super();
-		this.bpoId = bpoId;
-		this.bpoTime = bpoTime;
-		this.bpurchaseId = bpurchaseId;
-		this.braId = braId;
-		this.bpoTotalPrices = bpoTotalPrices;
-		this.checkStatus = checkStatus;
-		this.checkId = checkId;
-		this.checkTime = checkTime;
-		this.payStatus = payStatus;
-		this.storeStatus = storeStatus;
-		this.qualityStatus = qualityStatus;
+	public String getBpurchaseName() {
+		return bpurchaseName;
 	}
-	public BranchPurchaseOrder() {
-		super();
+	public void setBpurchaseName(String bpurchaseName) {
+		this.bpurchaseName = bpurchaseName;
+	}
+	public String getCheckName() {
+		return checkName;
+	}
+	public void setCheckName(String checkName) {
+		this.checkName = checkName;
+	}
+	
+	public BranchPurchaseOrderChild(){
+		
 	}
 	
 }
