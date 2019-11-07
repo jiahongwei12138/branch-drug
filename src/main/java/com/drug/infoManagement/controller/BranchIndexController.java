@@ -55,6 +55,7 @@ public class BranchIndexController {
 	@ResponseBody
 	public Map<String, Object> queryStorefactsheet(HttpSession httpSession){
 	    BranchStorefactsheet queryStorefactsheet = branchIndexService.queryStorefactsheet();
+	    httpSession.setAttribute("branchStorefactsheet", queryStorefactsheet);
 	    int counEmp = employeeMapper.getCounEmp();
 	    queryStorefactsheet.setSfscrewSize(counEmp);
 	    if (queryStorefactsheet!=null) {

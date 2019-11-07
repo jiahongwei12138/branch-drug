@@ -195,32 +195,42 @@
 					});
 
 				} else if (obj.event === 'del') {
-					layer.confirm('确认删除该角色吗', function(index) {
-						$.ajax({
-							type : "post",
-							url : "${APP_PATH}/deletRoleById.do",
-							data : {
-								"roleId" : data.roleId
-							},
-							success : function(result) {
-								if (result == false) {
-									layer.msg("删除失败", {
-										time : 3000,
-										icon : 5,
-										shift : 6
-									});
-								} else {
-									layer.msg("删除成功", {
-										time : 3000,
-										icon : 1,
-										shift : 3
-									});
-									obj.del();
+					if(data.roleId!=1){
+						layer.confirm('确认删除该角色吗', function(index) {
+							$.ajax({
+								type : "post",
+								url : "${APP_PATH}/deletRoleById.do",
+								data : {
+									"roleId" : data.roleId
+								},
+								success : function(result) {
+									if (result == false) {
+										layer.msg("删除失败", {
+											time : 3000,
+											icon : 5,
+											shift : 6
+										});
+									} else {
+										layer.msg("删除成功", {
+											time : 3000,
+											icon : 1,
+											shift : 3
+										});
+										obj.del();
+									}
+									layer.close(index);
 								}
-								layer.close(index);
-							}
+							});
 						});
-					});
+					}else{
+						layer.msg("不能删除店长", {
+							time : 3000,
+							icon : 1,
+							shift : 3
+						});
+						layer.close(index);
+					}
+					
 				} else if (obj.event === 'edit') {
 					//$("#opt"+data.deptId).prop("selected",true);
 					//console.log(data);

@@ -107,24 +107,24 @@ layui.use(['table','laydate','form','tree','jquery', 'util','upload','laydate'],
   table.on('tool(test)', function(obj){
     var data = obj.data;
    if(obj.event === 'del'){
-      layer.confirm('确认删除该员工吗？', function(index){
-    	  $.ajax({
-				type:"post",
-				url:"${APP_PATH}/deletEmpById.do",
-				data:{
-					"empid":data.empId,
-				},
-				success:function(result){
-					if(result==false){
-						layer.msg("删除失败", {time:3000, icon:5, shift:6});
-					}else{
-						layer.msg("删除成功", {time:3000, icon:1, shift:3});
-						obj.del();
-					}
-					layer.close(index);
-				}
-			});
-      });
+		   layer.confirm('确认删除该员工吗？', function(index){
+		    	  $.ajax({
+						type:"post",
+						url:"${APP_PATH}/deletEmpById.do",
+						data:{
+							"empid":data.empId,
+						},
+						success:function(result){
+							if(result==false){
+								layer.msg("删除失败", {time:3000, icon:5, shift:6});
+							}else{
+								layer.msg("删除成功", {time:3000, icon:1, shift:3});
+								obj.del();
+							}
+							layer.close(index);
+						}
+					});
+		      });
     } else if(obj.event === 'edit'){
     	
     	$.ajax({
@@ -227,6 +227,22 @@ layui.use(['table','laydate','form','tree','jquery', 'util','upload','laydate'],
 			
 			
             $("#formIdOne")[0].reset();
+            //拉取角色
+            $.ajax({
+    			type:"post",
+    			url:"${APP_PATH}/queryRoleIdName.do",
+    			
+    			success:function(result){
+    				var data = result.data;
+    				var content='<option value="">请分配角色</option>';
+    				$.each(data,function(index,item){
+    					content+='<option id="iot'+item.roleId+'" value="'+item.roleId+'">'+item.roleName+'</option>';
+    				});
+    				$("#roleId").html(content);
+    				form.render('select'); //重新渲染
+    			}
+    		});
+            
             
 			var index = layer.open({
 				title : '新增员工',//标题

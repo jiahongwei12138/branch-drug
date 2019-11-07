@@ -17,7 +17,7 @@ public interface BranchIndexMapper {
 	
 	List<BranchModel> queryByMenuById(Integer roleId);
 	
-	@Select(value = { "SELECT * FROM branch_storefactsheet WHERE sfsid = 1000" })
+	@Select(value = { "SELECT * FROM branch_storefactsheet WHERE sfsid = 1" })
 	BranchStorefactsheet queryStorefactsheet();
 
 }
