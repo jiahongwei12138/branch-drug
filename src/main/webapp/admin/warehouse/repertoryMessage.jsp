@@ -10,54 +10,54 @@
 <script type="text/javascript" src="${APP_PATH }/js/jquery-3.4.1.min.js"></script>
 
 <style>
-.layui-form-label {
+#barDemo.layui-form-label {
 	width: 100px;
 }
 
-.layui-input-block {
+#barDemo..layui-input-block {
 	margin-left: 130px;
 	min-height: 36px;
 	
 }
-.layui-textarea{
+#barDemo..layui-textarea{
 	border: none; 
 	resize: none;
 }
-.layui-input{
+#barDemo..layui-input{
 	border: none;
 }
 </style>
 
 </head> 
-<body onload="load()">
-	<table class="layui-hide" id="inventory" lay-filter="inventory"></table>
-	
-		
-	
-	<!-- 表头工具栏-->
-	<div id="but"  class="layui-form layui-hide layui-form-item">
+<body >
+ 	
+ 	<div id="but"  class="layui-form  layui-form-item" style="margin: 10px;">
 		<div class="layui-input-inline">
 			<form class="layui-form" action="" lay-filter="prg">
 				<div class="layui-input-inline">
 					<select id="storeName" name="storeName" lay-filter="aihao">
-						
 					</select>
 				</div>
 			</form>
-		</div> 
-		<div class="layui-input-inline" >
-			<div class="layui-input-block" >
-				<div class="layui-input-inline" >
-					<input id="condition" type="text" name="title" lay-verify="title"
-						autocomplete="off" placeholder="请输入药品名称" class="layui-input"
-						style="width: 150px;">
-				</div>
-				<button type="button"
-					class="layui-btn layui-btn-normal layui-btn-radius layui-clear"
-					lay-event="search">搜索</button>
-			</div>
 		</div>
+		
+		<div class="layui-input-block"  >
+			<div class="layui-input-inline"   >
+				<input id="condition" type="text" name="title" lay-verify="title"
+					autocomplete="off" placeholder="请输入药品名称" class="layui-input"
+					style="margin-right: 5px;">
+			</div>
+			<button type="button"
+				class="layui-btn layui-btn-normal layui-btn-radius layui-clear"
+				lay-event="search"  id="see" >搜索</button>
+		</div>
+		
 	</div>
+ 	
+	<table class="layui-hide" id="inventory" lay-filter="inventory"></table>
+	
+	<!-- 表头工具栏-->
+	
 	
 	<!-- 表内工具栏-->
 	<div id="barDemo" class="layui-hide">
@@ -114,12 +114,26 @@
 			var $=layui.jquery;
 			var layer = layui.layer;
 			var form = layui.form;
+
+			//渲染下拉列表框
+			$.ajax({
+				url : '${APP_PATH}/warehouse/getStore.do',
+				dataType : 'json',
+				type : 'post',
+				success : function(data) {
+					$.each(data.data, function(index, item) {
+						$('#storeName').append(
+								new Option(item.storeName, item.storeId));// 下拉菜单里添加元素
+					});
+					form.render("select");
+				}
+			});
 			
 			
 			table.render({
 				elem: '#inventory', //指定原始表格元素选择器（推荐id选择器）
 				url: '${APP_PATH }/warehouse/selectAllProduct.do',
-				toolbar:  '#but',
+				
 				height: 'full-20',
 				defaultToolbar: [],
 				page:true,
@@ -163,39 +177,21 @@
 			})
 
 			//监听表头工具栏
-			table.on('toolbar(inventory)',function(obj){
+			$("#see").click(function() {
 				//获取输入框的值
 				var condition=$("#condition").val()
 				
-				if(obj.event=== 'search'){
-					table.reload('inventory', {
-						url: '${APP_PATH}/warehouse/selectByProName.do'
-					  	,where: { //设定异步数据接口的额外参数，任意设
-					  		condition: condition
-					  	}
-						,method:'post'//不加这个就为get方式提交，会出现乱码
-					}); //只重载数据
-				}
+				
+				table.reload('inventory', {
+					url: '${APP_PATH}/warehouse/selectByProName.do'
+				  	,where: { //设定异步数据接口的额外参数，任意设
+				  		condition: condition
+				  	}
+					,method:'post'//不加这个就为get方式提交，会出现乱码
+				}); //只重载数据
 
 			})
 			
-			//渲染下拉列表框
-		   
-	    	$.ajax({
-				url : '${APP_PATH}/warehouse/getStore.do',
-				dataType : 'json',
-				type : 'post',
-				success : function(data) {
-					$.each(data.data, function(index, item) {
-						$('#storeName').append(
-								new Option(item.storeName, item.storeId));// 下拉菜单里添加元素
-					});
-					form.render("select");
-				}
-			});
-		   
-			
-				
 
 			form.on("select(aihao)", function(data) {
 

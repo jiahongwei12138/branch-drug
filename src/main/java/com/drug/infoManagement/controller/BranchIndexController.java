@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.drug.entity.BranchEmployee;
 import com.drug.entity.BranchModel;
-import com.drug.entity.BtanchStorefactsheet;
+import com.drug.entity.BranchStorefactsheet;
+import com.drug.infoManagement.mapper.EmployeeMapper;
 import com.drug.infoManagement.service.BranchIndexService;
 import com.drug.util.ToolClass;
 
@@ -22,6 +23,9 @@ public class BranchIndexController {
 
 	@Autowired
 	private BranchIndexService branchIndexService;
+	
+	@Autowired
+	private EmployeeMapper employeeMapper;
 	
 	
 	@RequestMapping("/login")
@@ -50,7 +54,10 @@ public class BranchIndexController {
 	@RequestMapping("/queryStorefactsheet")
 	@ResponseBody
 	public Map<String, Object> queryStorefactsheet(HttpSession httpSession){
-	    BtanchStorefactsheet queryStorefactsheet = branchIndexService.queryStorefactsheet();
+	    BranchStorefactsheet queryStorefactsheet = branchIndexService.queryStorefactsheet();
+	    httpSession.setAttribute("branchStorefactsheet", queryStorefactsheet);
+	    int counEmp = employeeMapper.getCounEmp();
+	    queryStorefactsheet.setSfscrewSize(counEmp);
 	    if (queryStorefactsheet!=null) {
 		httpSession.setAttribute("Storefactsheet", queryStorefactsheet);
 	    }

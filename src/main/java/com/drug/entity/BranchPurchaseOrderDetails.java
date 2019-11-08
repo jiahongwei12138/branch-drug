@@ -9,8 +9,13 @@ package com.drug.entity;
 public class BranchPurchaseOrderDetails {
 	private int bpodId;// 详情编号id
 	private int proId; // 商品id
+	private String proName;//商品名称
+	private double proPrice;//商品价格
 	private int bpodQuantity; //商品数量
-	private int bpoId;// 采购订单表主键id
+	private double bpodSubtotal;//商品小计
+	private String bpoId;// 采购订单表主键id
+	
+	
 	public int getBpodId() {
 		return bpodId;
 	}
@@ -29,21 +34,38 @@ public class BranchPurchaseOrderDetails {
 	public void setBpodQuantity(int bpodQuantity) {
 		this.bpodQuantity = bpodQuantity;
 	}
-	public int getBpoId() {
+	public double getBpodSubtotal() {
+		return bpodSubtotal;
+	}
+	public void setBpodSubtotal(double bpodSubtotal) {
+		this.bpodSubtotal = bpodSubtotal;
+	}
+	public String getBpoId() {
 		return bpoId;
 	}
-	public void setBpoId(int bpoId) {
+	public void setBpoId(String bpoId) {
 		this.bpoId = bpoId;
 	}
-	public BranchPurchaseOrderDetails(int bpodId, int proId, int bpodQuantity, int bpoId) {
-		super();
-		this.bpodId = bpodId;
-		this.proId = proId;
-		this.bpodQuantity = bpodQuantity;
-		this.bpoId = bpoId;
+	public String getProName() {
+		return proName;
 	}
+	public void setProName(String proName) {
+		this.proName = proName;
+	}
+	public double getProPrice() {
+		return proPrice;
+	}
+	public void setProPrice(double proPrice) {
+		this.proPrice = proPrice;
+	}
+	
+	
+	
 	public BranchPurchaseOrderDetails() {
 		super();
 	}
+	
+	
+	
 	
 }

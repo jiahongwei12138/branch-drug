@@ -1,6 +1,6 @@
 package com.drug.entity;
 
-public class BtanchStorefactsheet {
+public class BranchStorefactsheet {
     private Integer sfsId;		//分店id
     private String sfsname;		//分店名称
     private String sfslocation;		//地址

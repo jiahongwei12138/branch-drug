@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.purchaseManagement.mapper.PurchaseOrderMapper">	
+    <!-- 分页查询采购订单 -->
+	<select id="selectAll" resultType="BranchPurchaseOrderChild" parameterType="map">
+		SELECT p.*,e1.empName bpurchaseName,e2.empName checkName FROM branch_purchase_order p
+		LEFT JOIN branch_employee e1 ON p.bpurchaseId=e1.empId
+		LEFT JOIN branch_employee e2 ON p.checkId=e2.empId		
+		<where>
+			<if test="selectName !=null and selectName !=''">
+				and	checkStatus like BINARY '%${selectName}%'
+			</if>
+		</where>
+	    order by p.bpoId desc
+		limit #{page},#{limit}
+	</select>
+	<!-- 分页查询未审核与未批准的采购订单 -->
+	<select id="selectNotCheckOrder" resultType="BranchPurchaseOrderChild" parameterType="map">
+		SELECT p.*,e1.empName bpurchaseName,e2.empName checkName FROM branch_purchase_order p
+		LEFT JOIN branch_employee e1 ON p.bpurchaseId=e1.empId
+		LEFT JOIN branch_employee e2 ON p.checkId=e2.empId
+		where (checkStatus='未审核' or checkStatus='未批准')
+		   <if test="selectName !=null and selectName !=''">
+				and	checkStatus like BINARY '%${selectName}%'
+			</if>
+		limit #{page},#{limit}
+	</select>
+	<!-- 得到采购订单总行数 -->
+	<select id="getCount" resultType="Integer" parameterType="String">
+		SELECT COUNT(*) FROM branch_purchase_order
+		<where>
+			<if test="_parameter !=null and _parameter !=''">
+		 		and checkStatus  like BINARY '%${value}%'
+		 	</if>
+		</where>
+	</select>
+	<!-- 得到未审核与未批准的采购订单的总行数 -->
+	<select id="getNotCheckCount" resultType="Integer" parameterType="String">
+		SELECT COUNT(*) FROM branch_purchase_order where (checkStatus='未审核' or checkStatus='未批准')		
+		 	<if test="_parameter !=null and _parameter !=''">
+		 		and checkStatus  like BINARY '%${value}%'
+		 	</if>
+	 	
+	</select>
+	<!--新增一条采购订单  -->
+	<insert id="insertOrder" parameterType="BranchPurchaseOrder">
+		INSERT INTO branch_purchase_order(bpoId,bpoTime,bpurchaseId,braId,bpoTotalPrices) 
+		VALUES(#{bpoId},#{bpoTime},#{bpurchaseId},#{braId},#{bpoTotalPrices});
+	</insert>
+	<!-- 新增多条采购订单详情  -->
+	<insert id="insertBatchOrderDetails" parameterType="List">  
+	        INSERT INTO branch_purchase_order_details(proId,proName,proPrice,bpodQuantity,bpodSubtotal,bpoId)  VALUES  
+	        <foreach collection="list" item="item" index="index"  
+	            separator=",">  
+	            (#{item.proId},#{item.proName},#{item.proPrice},#{item.bpodQuantity},#{item.bpodSubtotal},#{item.bpoId})  
+	        </foreach>  
+	    </insert>
+	<!-- 通过审核人查询其id -->
+	<select id="selectEmpId" resultType="Integer" parameterType="String">
+		select empId from branch_employee where empName=#{checkName}		
+	</select>  
+	<!-- 修改采购订单的审核状态、审核时间、审核人 -->
+	<update id="updateOrder" parameterType="map">
+		UPDATE branch_purchase_order SET checkStatus=#{checkStatus},checkTime=#{checkTime},checkId=#{checkId}
+		where bpoId=#{bpoId}
+	</update>
+	<!-- 通过订单编号查询订单详情 -->
+	<select id="queryOrderDetailsById" parameterType="String" resultType="BranchPurchaseOrderDetails">
+		SELECT * FROM branch_purchase_order_details WHERE bpoId=#{bpoId} 
+	</select>
+	<!-- 通过接口获取总店传过来的订单编号去修改审核状态 -->
+	<update id="updateCheckStatusById" parameterType="String">
+		UPDATE branch_purchase_order SET checkStatus='已通过'
+		where bpoId=#{bpoId}
+	</update>
+	<!-- 通过订单编号删除采购订单 -->
+	<delete id="deleteOrder" parameterType="String">
+		delete from branch_purchase_order where bpoId=#{id}
+	</delete>
+	<!--  通过订单编号删除采购订单详情 -->
+	<delete id="deleteDetailById" parameterType="String">
+		delete from branch_purchase_order_details where bpoId=#{id}
+	</delete>
+	<!-- 查看某条订单详情 -->
+	<select id="selectOrderDetailById" parameterType="String" resultType="BranchPurchaseOrderDetails">
+		select * from branch_purchase_order_details where bpoId=#{id}
+	</select>
+	<!-- 查看找报表数据  -->
+	<select id="reportForms" resultType="PurchaseEchart" parameterType="String">
+		SELECT odn.proName, odn.months, IFNULL(a.total,0) total FROM 
+	(SELECT SUBSTR(checkTime,1,7) months,od.proId,SUM(bpodQuantity) total 
+		FROM branch_purchase_order o
+		INNER JOIN branch_purchase_order_details od
+		ON o.bpoId=od.bpoId
+		-- WHERE proName='吗啡' OR proName='青霉素' OR proName='阿莫西林'
+		GROUP BY SUBSTR(checkTime,1,7),proId) a
+	RIGHT JOIN (SELECT DISTINCT proId, proName, SUBSTR(checkTime,1,7) months
+			FROM branch_purchase_order_details, branch_purchase_order
+			WHERE proName IS NOT NULL
+			ORDER BY months,proId, proName) odn
+		ON a.proId=odn.proId
+		AND a.months=odn.months
+WHERE odn.months IS NOT NULL
+<if test="_parameter !=null and _parameter !=''">
+ 	AND odn.months LIKE '%${value}%'
+ </if>
+ORDER BY odn.proName, odn.months
+	</select>
+</mapper>

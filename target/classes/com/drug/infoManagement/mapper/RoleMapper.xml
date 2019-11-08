@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.infoManagement.mapper.RoleMapper">
+
+	<select id="queryRoleIdName"  resultType="BranchRole">
+		SELECT roleId,roleName FROM Branch_role WHERE visibles = '1'
+	</select>
+	
+	<select id="queryCountRole" resultType="int">
+		SELECT COUNT(*) FROM Branch_role where visibles = '1'
+	</select>
+	
+	<select id="queryAllRole" parameterType="map" resultType="BranchRole">
+		SELECT * FROM Branch_role WHERE visibles = 1 LIMIT #{page},#{limit}
+	</select>
+	
+	<insert id="addRole" parameterType="BranchRole" >
+		INSERT INTO Branch_role VALUES(NULL,#{roleName},#{roleDescribe},DEFAULT,NULL,NULL)
+	</insert>
+	
+	<select id="queryRoleName" parameterType="String" resultType="BranchRole">
+		SELECT * FROM Branch_role WHERE roleName = #{roleName}
+	</select>
+	
+	<update id="updatevisibles" parameterType="BranchRole">
+		UPDATE Branch_role SET visibles = '1' WHERE roleName = #{roleName}
+	</update>
+	
+	<update id="delRole" parameterType="String">
+		UPDATE Branch_role SET visibles = '0' WHERE roleId = #{roleId}
+	</update>
+	
+	<update id="delEmpRole"  parameterType="String">
+		UPDATE Branch_employee SET roleId = '0' WHERE roleId = #{roleId}
+	</update>
+	
+	<delete id="delRoleModuleRole"  parameterType="String">
+		DELETE FROM Branch_roleModule WHERE roleId =#{roleId}
+	</delete>
+	
+	<update id="updateRoleById" parameterType="BranchRole">
+		UPDATE Branch_role SET roleName = #{roleName},roleDescribe=#{roleDescribe} WHERE roleId = #{roleId}
+	</update>
+	
+	<select id="queryModelIdByRoleId" parameterType="integer" resultType="integer">
+		SELECT modelId FROM Branch_roleModule WHERE roleId = #{roleId}
+	</select>
+	
+	<!-- 通过角色id删除该角色所拥有的权限模块 -->
+	<delete id="deleteAuthorityByRoleId" parameterType="String">
+		delete from Branch_roleModule where roleId=#{roleId}
+	</delete>
+	
+	<!-- 分配权限模块 -->
+	<insert id="addAuthority" parameterType="Map">
+		insert into Branch_roleModule(roleId,modelId) values
+		<foreach collection="modelIds" item="modelId" separator=",">
+			(#{roleId},#{modelId})
+		</foreach>
+	</insert>
+</mapper>

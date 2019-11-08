@@ -7,21 +7,22 @@ package com.drug.entity;
  * @version 1.0
  */
 public class BranchPurchaseOrder {
-	private int bpoId;  //订单编号
+	private String bpoId;  //订单编号
 	private String bpoTime; //下单时间
 	private int bpurchaseId;  // 采购员(员工主键employeeId)
 	private int braId;    //分店编号(主键braId)
 	private double bpoTotalPrices; //采购订单总金额
-	private String checkStatus; //审核状态(已审核/未审核)
+	private String checkStatus; //审核状态(未审核/已批准/未批准/已通过)
 	private int checkId; //审核人编号(员工主键employeeId) 
 	private int checkTime; //审核日期 
 	private String payStatus; //付款状态(未付款/已付款)
 	private String storeStatus; //入库状态(未入库/已入库)
 	private String qualityStatus; //质检状态(未质检/已质检)
-	public int getBpoId() {
+	
+	public String getBpoId() {
 		return bpoId;
 	}
-	public void setBpoId(int bpoId) {
+	public void setBpoId(String bpoId) {
 		this.bpoId = bpoId;
 	}
 	public String getBpoTime() {
@@ -84,7 +85,7 @@ public class BranchPurchaseOrder {
 	public void setQualityStatus(String qualityStatus) {
 		this.qualityStatus = qualityStatus;
 	}
-	public BranchPurchaseOrder(int bpoId, String bpoTime, int bpurchaseId, int braId, double bpoTotalPrices,
+	public BranchPurchaseOrder(String bpoId, String bpoTime, int bpurchaseId, int braId, double bpoTotalPrices,
 			String checkStatus, int checkId, int checkTime, String payStatus, String storeStatus,
 			String qualityStatus) {
 		super();

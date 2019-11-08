@@ -17,6 +17,7 @@ public class BranchPurchaseReturn {
 	private String checkTime;//审核日期
 	private String payStatus;//付款状态(未收款/已收款)
 	private String bprReason;//退货原因
+	
 	public int getBprId() {
 		return bprId;
 	}
@@ -77,20 +78,7 @@ public class BranchPurchaseReturn {
 	public void setBprReason(String bprReason) {
 		this.bprReason = bprReason;
 	}
-	public BranchPurchaseReturn(int bprId, String bprTime, int returnId, int braId, double bprMoney, String checkStatus,
-			int checkId, String checkTime, String payStatus, String bprReason) {
-		super();
-		this.bprId = bprId;
-		this.bprTime = bprTime;
-		this.returnId = returnId;
-		this.braId = braId;
-		this.bprMoney = bprMoney;
-		this.checkStatus = checkStatus;
-		this.checkId = checkId;
-		this.checkTime = checkTime;
-		this.payStatus = payStatus;
-		this.bprReason = bprReason;
-	}
+
 	public BranchPurchaseReturn() {
 		super();
 	}

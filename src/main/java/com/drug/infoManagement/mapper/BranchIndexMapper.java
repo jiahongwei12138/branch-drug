@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Select;
 
 import com.drug.entity.BranchEmployee;
 import com.drug.entity.BranchModel;
-import com.drug.entity.BtanchStorefactsheet;
+import com.drug.entity.BranchStorefactsheet;
 
 
 public interface BranchIndexMapper {
@@ -17,7 +17,7 @@ public interface BranchIndexMapper {
 	
 	List<BranchModel> queryByMenuById(Integer roleId);
 	
-	@Select(value = { "SELECT * FROM btanch_storefactsheet WHERE sfsid = 1000" })
-	BtanchStorefactsheet queryStorefactsheet();
+	@Select(value = { "SELECT * FROM branch_storefactsheet WHERE sfsid = 1" })
+	BranchStorefactsheet queryStorefactsheet();
 
 }
