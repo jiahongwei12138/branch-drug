@@ -56,7 +56,7 @@
 	
 	<insert id="addEmployee" parameterType="BranchEmployee">
 		INSERT INTO Branch_employee VALUES
-		(null,#{empName},#{empPwd},#{empAge},#{empSex},#{empTel},"url...",#{joinTime},#{studyUndergo},DEFAULT,#{roleId},DEFAULT,DEFAULT)
+		(null,#{empName},#{empPwd},#{empAge},#{empSex},#{empTel},#{headUrl},#{joinTime},#{studyUndergo},DEFAULT,#{roleId},DEFAULT,DEFAULT)
 	</insert>
 	
 	
