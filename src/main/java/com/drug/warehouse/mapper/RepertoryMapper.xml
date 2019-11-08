@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.warehouse.mapper.RepertoryMapper">
+	
+	<resultMap type="BranchProduct" id="productMap">
+		<id column="proid" property="proid"/>
+		<result column="proName" property="proName"/>
+		<result column="enlishName" property="enlishName"/>
+		<result column="shape" property="shape"/>
+		<result column="methodOfApplication" property="methodOfApplication"/>
+		<result column="packaging" property="packaging"/>
+		<result column="proBatchNumber" property="proBatchNumber"/>
+		<result column="expirationdate" property="expirationdate"/>
+		<result column="storageCondition" property="storageCondition"/>
+		<result column="specification" property="specification"/>
+		<result column="thebarcode" property="thebarcode"/>
+		<result column="proImageUrl" property="proImageUrl"/>
+		<result column="proForbidden" property="proForbidden"/>
+		<result column="proBadness" property="proBadness"/>
+		<result column="retailPrice" property="retailPrice"/>
+		<result column="hqtId" property="hqtId"/>
+		<result column="number" property="number"/>
+		<collection property="branchStore" ofType="BranchStore">
+			<id column="storeId" property="storeId"/>
+			<result column="storeName" property="storeName"/>
+			<result column="capacity" property="capacity"/>
+			<result column="address" property="address"/>
+			<result column="creationTime" property="creationTime"/>
+			<result column="state" property="state"/>
+		</collection>
+	</resultMap>
+
+	
+	<select id="selectAllProduct" resultMap="productMap" parameterType="map">
+		SELECT p.*,SUM(pr.number) number,s.* FROM `branch_product` p
+		INNER JOIN branch_ProductRepertory pr
+		ON p.proId=pr.proId
+		INNER JOIN branch_store s
+		ON pr.storeId=s.storeId
+		GROUP BY p.proId
+		HAVING proId > (#{page}*#{limit}) LIMIT #{limit}
+	</select>
+	
+	<select id="getProductCount" resultType="Integer">
+		SELECT COUNT(*) FROM branch_product
+	</select>
+	
+	<select id="getStore" resultType="BranchStore">
+		SELECT * FROM `branch_store`
+	</select>
+	
+	<select id="getProductCountByProName" resultType="Integer" parameterType="String">
+		SELECT COUNT(*) FROM branch_product WHERE proName LIKE concat('%', #{proName}, '%')
+	</select>
+	
+	<select id="selectByProName" resultMap="productMap" parameterType="map">
+		SELECT p.*,SUM(pr.number) number,s.* FROM `branch_product` p
+		INNER JOIN branch_ProductRepertory pr
+		ON p.proId=pr.proId
+		INNER JOIN branch_store s
+		ON pr.storeId=s.storeId
+		WHERE proName LIKE concat('%', #{proName}, '%')
+		GROUP BY p.proId
+		HAVING  proId > (#{page}*#{limit}) LIMIT #{limit}
+	</select>
+	
+	<select id="selectProductByStoreId" resultMap="productMap" parameterType="map">
+		SELECT p.*,number,s.* FROM `branch_product` p
+		INNER JOIN branch_ProductRepertory pr
+		ON p.proId=pr.proId
+		INNER JOIN branch_store s
+		ON pr.storeId=s.storeId
+		WHERE s.`storeId`=#{storeId} AND p.proId > (#{page}*#{limit}) LIMIT #{limit}
+	</select>
+	
+	<select id="getProductCountByStoreId" resultType="Integer" parameterType="Integer">
+		SELECT COUNT(*) FROM `branch_product` p
+		INNER JOIN branch_ProductRepertory pr
+		ON p.proId=pr.proId
+		INNER JOIN branch_store s
+		ON pr.storeId=s.storeId
+		WHERE s.`storeId`=#{storeId}
+	</select>
+	
+</mapper>

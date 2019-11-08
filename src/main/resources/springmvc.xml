@@ -32,7 +32,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		<property name="suffix" value=".jsp"/>
 	</bean>
 	
-	<mvc:interceptors>
+	<!-- <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/login.do"/>
@@ -44,5 +44,5 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 			<mvc:exclude-mapping path="/admin/json/**"/>
 			<bean class="com.drug.util.LoginIntercepter"></bean>
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors> -->
 </beans>

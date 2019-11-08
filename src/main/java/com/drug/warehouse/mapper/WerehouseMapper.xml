@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.drug.warehouse.mapper.WerehouseMapper">
+	<select id="selectAllStore" resultType="BranchStore" parameterType="map">
+		SELECT * FROM branch_store WHERE storeId > (#{page}*#{limit}) LIMIT #{limit}
+	</select>
+	
+	<select id="getStoreCount" resultType="Integer">
+		SELECT COUNT(*) FROM  branch_Store 
+	</select>
+	
+	<select id="addStore" parameterType="BranchStore">
+		INSERT INTO branch_store(storeName,capacity,address,creationTime,state) VALUES(#{storeName},#{capacity},#{address},#{creationTime},#{state})
+	</select>
+	
+	<delete id="deleteStoreById" parameterType="Integer">
+		DELETE FROM branch_store WHERE storeId=#{storeId}
+	</delete>
+	
+</mapper>
