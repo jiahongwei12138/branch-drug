@@ -3,11 +3,11 @@
 <mapper namespace="com.drug.infoManagement.mapper.RoleMapper">
 
 	<select id="queryRoleIdName"  resultType="BranchRole">
-		SELECT roleId,roleName FROM Branch_role WHERE visibles = '1';
+		SELECT roleId,roleName FROM Branch_role WHERE visibles = '1'
 	</select>
 	
 	<select id="queryCountRole" resultType="int">
-		SELECT COUNT(*) FROM Branch_role
+		SELECT COUNT(*) FROM Branch_role where visibles = '1'
 	</select>
 	
 	<select id="queryAllRole" parameterType="map" resultType="BranchRole">

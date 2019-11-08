@@ -13,7 +13,7 @@
 	</select>
 	
 	<select id="getCountClient" resultType="int">
-		SELECT COUNT(*) FROM branch_client
+		SELECT COUNT(*) FROM branch_client where clientState = '未删除'
 	</select>
 	
 	<update id="deleteCliById" parameterType="String">
