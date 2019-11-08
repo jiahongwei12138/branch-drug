@@ -23,13 +23,13 @@
   		<td>
   			<label class="layui-form-label" style="font-size:13px;">采购员</label>
    			<div class="layui-input-block">
-      			<input name="bpurchaseName" class="layui-input" type="text" autocomplete="off" lay-verify="title" value="${name }" readonly="readonly">
+      			<input name="bpurchaseName" class="layui-input" type="text" autocomplete="off" lay-verify="title" value="${BranchEmployee.empName }" readonly="readonly">
     		</div>
 		</td>
   		<td>
   			<label class="layui-form-label" style="font-size:13px;">分店编号</label>
    			<div class="layui-input-block">
-     				<input name="braId" class="layui-input" type="text" autocomplete="off" lay-verify="title" value="${braId }" readonly="readonly">
+     				<input name="braId" class="layui-input" type="text" autocomplete="off" lay-verify="title" value="${BranchStorefactsheet.sfsId }" readonly="readonly">
    			</div>
     	</td>
   	</tr>

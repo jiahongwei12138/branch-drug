@@ -13,10 +13,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.drug.entity.BranchEmployee;
 import com.drug.entity.BranchPurchaseOrder;
 import com.drug.entity.BranchPurchaseOrderChild;
 import com.drug.entity.BranchPurchaseOrderDetails;
 import com.drug.entity.BranchPurchaseOrderDetailsChild;
+import com.drug.entity.BranchStorefactsheet;
 import com.drug.entity.MainProduct;
 import com.drug.entity.PurchaseEchart;
 import com.drug.entity.PurchaseNum;
@@ -83,10 +85,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
 		int id=(Integer)session.getAttribute("bpurchaseId");
 		//为采购订单类对象添加采购员id
 		bpo.setBpurchaseId(id);
-		//从session中取出分店id
-		int braId=(Integer)session.getAttribute("braId");
+		//从session中取出分店信息对象
+		BranchStorefactsheet bsf=(BranchStorefactsheet)session.getAttribute("BranchStorefactsheet");
 		//为采购订单类对象添加分店编号id
-		bpo.setBpurchaseId(braId);
+		bpo.setBpurchaseId(bsf.getSfsId());
 		//时间随机数生成订单编号
 		Date date=new Date();
 		SimpleDateFormat simple = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -303,12 +305,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
 			session.setAttribute("bpodclist", sessionlist);
 			//将商品总价存入session中
 			session.setAttribute("totalMoney", totalMoney);
-			String name="荒";
-			session.setAttribute("name",name);
-			int braId=100001;
-			session.setAttribute("braId",braId);
-			int bpurchaseId=1001;
-			session.setAttribute("bpurchaseId",bpurchaseId);
+			//从session中取出分店员工对象
+			BranchEmployee	be=(BranchEmployee)session.getAttribute("BranchEmployee");
+			//把员工id存到session中去
+			session.setAttribute("bpurchaseId",be.getEmpId());
 		}
 		return 	flag;	
 	}
@@ -344,10 +344,6 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
 		session.setAttribute("totalMoney", total);
 		//将新的采购订单详情单子类集合存入session中
 		session.setAttribute("bpodclist", bpodclist);
-		/*List<BranchPurchaseOrderDetailsChild> bpodclist1= (List<BranchPurchaseOrderDetailsChild>)session.getAttribute("bpodclist");
-		for (BranchPurchaseOrderDetailsChild bpod : bpodclist1) {
-			System.err.println(bpod.getBpodSubtotal()+"sss");
-		}*/
 		return flag;
 	}
    /**
