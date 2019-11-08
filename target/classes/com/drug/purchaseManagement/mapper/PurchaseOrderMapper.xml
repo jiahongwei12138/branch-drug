@@ -3,9 +3,9 @@
 <mapper namespace="com.drug.purchaseManagement.mapper.PurchaseOrderMapper">	
     <!-- 分页查询采购订单 -->
 	<select id="selectAll" resultType="BranchPurchaseOrderChild" parameterType="map">
-		SELECT p.*,e1.employeeName bpurchaseName,e2.employeeName checkName FROM branch_purchase_order p
-		LEFT JOIN branch_employee e1 ON p.bpurchaseId=e1.employeeId
-		LEFT JOIN branch_employee e2 ON p.checkId=e2.employeeId		
+		SELECT p.*,e1.empName bpurchaseName,e2.empName checkName FROM branch_purchase_order p
+		LEFT JOIN branch_employee e1 ON p.bpurchaseId=e1.empId
+		LEFT JOIN branch_employee e2 ON p.checkId=e2.empId		
 		<where>
 			<if test="selectName !=null and selectName !=''">
 				and	checkStatus like BINARY '%${selectName}%'
@@ -16,9 +16,9 @@
 	</select>
 	<!-- 分页查询未审核与未批准的采购订单 -->
 	<select id="selectNotCheckOrder" resultType="BranchPurchaseOrderChild" parameterType="map">
-		SELECT p.*,e1.employeeName bpurchaseName,e2.employeeName checkName FROM branch_purchase_order p
-		LEFT JOIN branch_employee e1 ON p.bpurchaseId=e1.employeeId
-		LEFT JOIN branch_employee e2 ON p.checkId=e2.employeeId
+		SELECT p.*,e1.empName bpurchaseName,e2.empName checkName FROM branch_purchase_order p
+		LEFT JOIN branch_employee e1 ON p.bpurchaseId=e1.empId
+		LEFT JOIN branch_employee e2 ON p.checkId=e2.empId
 		where (checkStatus='未审核' or checkStatus='未批准')
 		   <if test="selectName !=null and selectName !=''">
 				and	checkStatus like BINARY '%${selectName}%'
@@ -57,7 +57,7 @@
 	    </insert>
 	<!-- 通过审核人查询其id -->
 	<select id="selectEmpId" resultType="Integer" parameterType="String">
-		select employeeId from branch_employee where employeeName=#{checkName}		
+		select empId from branch_employee where empName=#{checkName}		
 	</select>  
 	<!-- 修改采购订单的审核状态、审核时间、审核人 -->
 	<update id="updateOrder" parameterType="map">

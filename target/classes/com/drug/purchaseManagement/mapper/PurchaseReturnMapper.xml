@@ -8,9 +8,9 @@
     </insert>
     <!-- 分页查询采购退货单 -->
 	<select id="selectReturnAll" resultType="BranchPurchaseReturnChild" parameterType="map">
-		SELECT p.*,e1.employeeName returnName,e2.employeeName checkName FROM branch_purchase_return p
-		LEFT JOIN branch_employee e1 ON p.returnId=e1.employeeId
-		LEFT JOIN branch_employee e2 ON p.checkId=e2.employeeId		
+		SELECT p.*,e1.empName returnName,e2.empName checkName FROM branch_purchase_return p
+		LEFT JOIN branch_employee e1 ON p.returnId=e1.empId
+		LEFT JOIN branch_employee e2 ON p.checkId=e2.empId		
 		<where>
 			<if test="selectName !=null and selectName !=''">
 				and	checkStatus like BINARY '%${selectName}%'
@@ -30,9 +30,9 @@
 	</select>
 	<!-- 分页查询未审核与未批准的采购退货单 -->
 	<select id="selectNotCheckReturn" resultType="BranchPurchaseReturnChild" parameterType="map">
-		SELECT p.*,e1.employeeName returnName,e2.employeeName checkName FROM branch_purchase_return p
-		LEFT JOIN branch_employee e1 ON p.returnId=e1.employeeId
-		LEFT JOIN branch_employee e2 ON p.checkId=e2.employeeId	
+		SELECT p.*,e1.empName returnName,e2.empName checkName FROM branch_purchase_return p
+		LEFT JOIN branch_employee e1 ON p.returnId=e1.empId
+		LEFT JOIN branch_employee e2 ON p.checkId=e2.empId	
 		where (checkStatus='未审核' or checkStatus='未批准')
 		   <if test="selectName !=null and selectName !=''">
 				and	checkStatus like BINARY '%${selectName}%'
