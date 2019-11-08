@@ -386,18 +386,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
 				
 			}
 			PurchaseNum pn=new PurchaseNum(mouths,num);
-			for (Integer it : num) {
-				System.err.println(it);
-			}
-			for (Integer it : num) {
-				System.err.println(it);
-			}
 			pnlist.add(pn);
 			//map.put("name", names);
 			//num.clear();
-			for (Integer it : num) {
-				System.err.println(it);
-			}
 		}
 		return pnlist;
 	}

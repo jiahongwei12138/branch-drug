@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>总店财务报表</title>
+    <title>总店采购报表</title>
     <!--引入echarts.js-->
     <script src="../../js/echarts.js"></script>
     <script src="../../js/jquery-3.4.1.min.js"></script>
@@ -66,9 +66,10 @@
     		    ]
     		};
         // 异步加载数据
-          $.post('${APP_PATH}/purchase/reportForms.do',{}).done(function(jsonObj) {//jQuery触发ajax 从后台异步获取数据
+          $.post('${APP_PATH}/purchase/reportForms.do',{}).done(function(back) {//jQuery触发ajax 从后台异步获取数据
             //var str = eval('(' + data + ')'); //解析json
             //var jsonObj =  JSON.parse(data);//转换为json对象
+            var jsonObj=back.pnlist;
             var amountArray=[];
             var nameArray=[];
           //6.ajax发起数据请求
@@ -78,7 +79,6 @@
     			url : "${APP_PATH}/purchase/reportForms.do",
     			dataType : "json", //返回数据形式为json
     			success : function(back) { */	
-    			//var proName = "";
     			//dataArray.push("product");
     		    for(var i in jsonObj.length){
     		    	 amountArray.push(jsonObj[i].ilist);
